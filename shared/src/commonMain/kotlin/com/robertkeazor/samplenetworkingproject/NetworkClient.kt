@@ -12,7 +12,5 @@ object NetworkClient {
         }
     }
 
-    suspend fun callLocalHost() = client.get<List<TileCard>>("http://10.0.2.2:8080/tilecard")
-
-
+    suspend fun getTiles() = client.get<List<TileCard>>("http://10.0.2.2:8080/")
 }

@@ -1,7 +1,9 @@
 package com.robertkeazor.samplenetworkingproject
 
-class NetworkModule() {
-    fun testing(): String {
-      return ""
+import io.ktor.client.request.*
+
+class NetworkModule {
+    suspend fun tiles(): List<TileCard> {
+        return NetworkClient.client.get("${Platform().baseUrl}:8080")
     }
 }

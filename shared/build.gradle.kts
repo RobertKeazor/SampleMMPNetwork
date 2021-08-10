@@ -5,6 +5,7 @@ plugins {
     kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.5.20"
     id("com.android.library")
+    kotlin("kapt")
 }
 
 version = "1.0"
@@ -29,7 +30,7 @@ kotlin {
     
     sourceSets {
         val ktor_version = "1.6.2"
-        val coroutinesVersion = "1.5.1"
+        val coroutinesVersion = "1.5.0-native-mt"
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktor_version")
@@ -39,28 +40,34 @@ kotlin {
 
             }
         }
+
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-android:$ktor_version")
+            }
+        }
+
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktor_version")
+                kotlin.srcDir("${buildDir.absolutePath}/generated/source/kaptKotlin/")
+            }
+        }
+
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-android:$ktor_version")
-            }
-        }
+
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktor_version")
-            }
-        }
+
         val iosTest by getting
     }
 }
